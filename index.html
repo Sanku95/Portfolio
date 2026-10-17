@@ -256,6 +256,8 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
 .s-toggle[aria-checked="true"] .switch { background: var(--accent); }
 .s-toggle[aria-checked="true"] .knob { transform: translateX(18px); background: var(--accent-ink); }
 .s-card { width: min(228px, 66%); }
+.reading-author { color: var(--muted); font-size: 0.88rem; margin-top: -4px; }
+.reading-note { color: var(--muted); font-size: 0.78rem; line-height: 1.45; margin-top: 10px; max-width: 28ch; }
 .s-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 4px 0 8px; letter-spacing: -0.01em; }
 .s-pill { display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
 .s-slider { width: min(232px, 68%); font-size: 0.85rem; }
@@ -317,11 +319,12 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
               <div class="bob srow"><span>Dark mode</span><span class="switch"><i class="knob"></i></span></div>
             </div>
 
-            <div class="sticker s-card" data-act="case" role="button" tabindex="0" aria-label="Open the Yatri case study" data-x="0.08" data-y="0.31" style="--d:-3.2s">
+            <div class="sticker s-card" data-act="reading" role="button" tabindex="0" aria-label="Currently reading Emotional Intelligence by Daniel Goleman. Book link to be added." data-x="0.08" data-y="0.31" style="--d:-3.2s">
               <div class="bob">
-                <p class="label">Yatri · live location</p>
-                <p class="s-title">Next station</p>
-                <p class="s-pill"><span class="pulse"></span>Arriving in 5 min</p>
+                <p class="label">Currently reading</p>
+                <p class="s-title">Emotional Intelligence</p>
+                <p class="reading-author">Daniel Goleman</p>
+                <p class="reading-note">Understanding people beyond the interface.</p>
               </div>
             </div>
 
@@ -679,6 +682,9 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
     b.className = 'btn'; wrap.appendChild(b); p.appendChild(wrap);
   });
 
+  /* Reading card affiliate destination. Add the supplied affiliate URL here when available. */
+  var readingAffiliateUrl = '';
+
   /* hero canvas */
   var cv = document.getElementById('canvas');
   var stickers = Array.prototype.slice.call(cv.querySelectorAll('.sticker'));
@@ -688,6 +694,7 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
     if (a === 'connect') document.getElementById('contact').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
     else if (a === 'theme') toggleTheme();
     else if (a === 'case') { select(tabs[0], false); document.getElementById('case').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
+    else if (a === 'reading' && readingAffiliateUrl) window.open(readingAffiliateUrl, '_blank', 'noopener');
   }
   stickers.forEach(function (s) {
     s.style.left = (parseFloat(s.getAttribute('data-x')) * 100) + '%';
