@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Sankalp Patil, UX/UI designer and researcher based in Mumbai.">
+<title>Sankalp Patil Portfolio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: a single-line scroll that reads like a Mumbai Western Line route map. Dark-first. The live-train strip in the hero is the one bold moment; everything else stays quiet. */
+:root {
+  --bg: #0a0e11;
+  --surface: #11171b;
+  --line: #1f2a30;
+  --fg: #e8eef0;
+  --muted: #8d9ba4;
+  --accent: #ffb43a;
+  --accent-ink: #1a1204;
+  --glow: rgba(255, 180, 58, 0.13);
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f2f4f1; --surface: #e8ece8; --line: #d2dad5; --fg: #10181c; --muted: #54646b;
+    --accent: #a85a00; --accent-ink: #ffffff; --glow: rgba(168, 90, 0, 0.1);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f2f4f1; --surface: #e8ece8; --line: #d2dad5; --fg: #10181c; --muted: #54646b;
+  --accent: #a85a00; --accent-ink: #ffffff; --glow: rgba(168, 90, 0, 0.1);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 60; background: var(--bg);
+}
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.05; margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
+p { margin: 0; }
+.in {
+  max-width: 1120px; margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.label {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+}
+section { scroll-margin-top: calc(72px + env(safe-area-inset-top, 0px)); }
+
+/* header */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.top .in { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+.brand { font-family: var(--font-display); font-weight: 700; text-decoration: none; letter-spacing: -0.02em; font-size: 1.1rem; }
+.brand span { color: var(--accent); }
+.nav { display: flex; gap: 24px; font-size: 0.9rem; }
+.nav a { text-decoration: none; color: var(--muted); transition: color .2s; }
+.nav a:hover { color: var(--fg); }
+.tools { display: flex; align-items: center; gap: 10px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+  border: 1px solid var(--line); background: transparent; border-radius: 999px;
+  padding: 8px 16px; font-size: 0.9rem; font-weight: 500; transition: border-color .2s, background .2s, transform .2s;
+}
+.btn:hover { border-color: var(--accent); }
+.btn.solid { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+.btn.solid:hover { transform: translateY(-1px); }
+.icon-btn { width: 38px; height: 38px; padding: 0; justify-content: center; }
+.icon-btn svg { width: 17px; height: 17px; }
+@media (max-width: 760px) { .nav { display: none; } }
+
+/* hero */
+.hero { position: relative; overflow: hidden; padding-block: clamp(48px, 9vw, 104px) 40px; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(520px circle at var(--mx, 70%) var(--my, 20%), var(--glow), transparent 70%);
+}
+.hero .in { position: relative; }
+.hero h1 { font-size: clamp(2.7rem, 9vw, 6.6rem); font-weight: 650; max-width: 12ch; margin-top: 20px; }
+.hero .lede { margin-top: 24px; max-width: 46ch; color: var(--muted); font-size: clamp(1.02rem, 2.2vw, 1.2rem); }
+.hero .lede b { color: var(--fg); font-weight: 500; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+/* live line */
+.line-card { margin-top: clamp(40px, 7vw, 72px); border: 1px solid var(--line); border-radius: 18px; background: var(--surface); padding: 20px clamp(14px, 3vw, 28px) 18px; }
+.line-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; align-items: baseline; }
+.status { font-family: var(--font-mono); font-size: 0.82rem; color: var(--fg); display: flex; align-items: center; gap: 8px; min-width: 0; }
+.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 var(--glow); animation: pulse 1.8s infinite; flex: none; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--accent); } 70% { box-shadow: 0 0 0 9px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.track { position: relative; height: 96px; margin: 14px 34px 0; }
+.rail { position: absolute; left: 0; right: 0; top: 30px; height: 2px; background: var(--line); border-radius: 2px; }
+.fill { position: absolute; left: 0; top: 30px; height: 2px; background: var(--accent); border-radius: 2px; width: 0; }
+.stn { position: absolute; top: 14px; transform: translateX(-50%); background: none; border: 0; padding: 6px 6px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.stn i { width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--muted); transition: border-color .2s, background .2s, transform .2s; margin-top: 2px; }
+.stn:hover i { border-color: var(--accent); transform: scale(1.25); }
+.stn[aria-pressed="true"] i { border-color: var(--accent); background: var(--accent); }
+.stn b { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 500; letter-spacing: 0.06em; }
+.stn small { font-size: 0.72rem; color: var(--muted); display: none; margin-top: -8px; white-space: nowrap; }
+@media (min-width: 640px) { .stn small { display: block; } }
+.train {
+  position: absolute; top: 20px; width: 34px; height: 22px; margin-left: -17px; border-radius: 6px 6px 4px 4px;
+  background: var(--accent); z-index: 3; pointer-events: none; box-shadow: 0 4px 18px var(--glow);
+}
+.train::before, .train::after { content: ""; position: absolute; top: 5px; width: 8px; height: 7px; border-radius: 2px; background: var(--accent-ink); opacity: .75; }
+.train::before { left: 6px; } .train::after { right: 6px; }
+.line-note { margin-top: 8px; color: var(--muted); font-size: 0.82rem; }
+
+/* work */
+.block { padding-block: clamp(56px, 9vw, 104px) 0; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px; }
+.sec-head h2 { font-size: clamp(2rem, 5vw, 3.4rem); margin-top: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: none; border-radius: 999px; padding: 6px 14px; font-size: 0.85rem; transition: all .2s; }
+.chip:hover { border-color: var(--muted); }
+.chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.rows { list-style: none; padding: 0; margin: 36px 0 0; border-top: 1px solid var(--line); }
+.rows li[hidden] { display: none; }
+.row {
+  display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) auto; align-items: center; gap: 8px 24px;
+  padding: 26px 8px; border-bottom: 1px solid var(--line); text-decoration: none; width: 100%;
+  background: none; border-left: 0; border-right: 0; border-top: 0; text-align: left; transition: background .25s, padding .25s;
+}
+a.row:hover, button.row:hover { background: var(--surface); padding-inline: 20px; }
+.row h3 { font-size: clamp(1.4rem, 3.2vw, 2.1rem); font-weight: 560; }
+.row .sub { color: var(--muted); font-size: 0.95rem; margin-top: 6px; }
+.row .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; color: var(--muted); }
+.tag.hot { border-color: var(--accent); color: var(--accent); }
+.arrow { width: 22px; height: 22px; color: var(--muted); transition: transform .25s, color .25s; }
+a.row:hover .arrow, button.row:hover .arrow { transform: translate(3px, -3px); color: var(--accent); }
+.row.soon { cursor: default; opacity: .65; }
+@media (max-width: 640px) { .row { grid-template-columns: 1fr auto; } .row .tags { grid-column: 1 / -1; } }
+
+/* case study */
+.case { margin-top: 36px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); overflow: hidden; }
+.case-top { padding: clamp(20px, 4vw, 40px); display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px; border-bottom: 1px solid var(--line); }
+.case-top h3 { font-size: clamp(1.6rem, 3.6vw, 2.5rem); margin-top: 8px; }
+.case-top p { color: var(--muted); }
+.meta { display: grid; gap: 10px; align-content: start; }
+.meta div { display: flex; flex-direction: column; gap: 2px; }
+.meta span:last-child { font-size: 0.95rem; }
+@media (max-width: 760px) { .case-top { grid-template-columns: 1fr; } }
+.tablist { display: flex; gap: 4px; padding: 8px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tab { background: none; border: 0; border-radius: 10px; padding: 9px 16px; color: var(--muted); font-weight: 500; white-space: nowrap; transition: all .2s; }
+.tab:hover { color: var(--fg); }
+.tab[aria-selected="true"] { background: var(--bg); color: var(--fg); }
+.panel { padding: clamp(20px, 4vw, 40px); animation: fade .35s ease; }
+.panel[hidden] { display: none; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.panel h4 { font-family: var(--font-display); font-size: 1.5rem; margin: 0 0 10px; letter-spacing: -0.01em; font-weight: 600; }
+.panel p { color: var(--muted); max-width: 62ch; }
+.panel p + p { margin-top: 12px; }
+.big { font-family: var(--font-display); font-size: clamp(3rem, 9vw, 5.6rem); font-weight: 650; line-height: 1; letter-spacing: -0.03em; color: var(--accent); }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 48px); align-items: start; }
+@media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+.bars { display: grid; gap: 18px; }
+.bar-top { display: flex; justify-content: space-between; gap: 12px; font-size: 0.92rem; margin-bottom: 6px; }
+.bar-top b { font-family: var(--font-mono); font-weight: 500; color: var(--accent); font-variant-numeric: tabular-nums; }
+.bar { height: 8px; border-radius: 8px; background: var(--bg); overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); border-radius: 8px; transform-origin: left; animation: grow .9s cubic-bezier(.2,.7,.2,1); }
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.facts li { padding-left: 18px; position: relative; color: var(--muted); }
+.facts li::before { content: ""; position: absolute; left: 0; top: 0.7em; width: 8px; height: 2px; background: var(--accent); }
+.facts li b { color: var(--fg); font-weight: 500; }
+.feat { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin-top: 8px; }
+.feat div { border: 1px solid var(--line); border-radius: 14px; padding: 18px; background: var(--bg); }
+.feat h5 { margin: 0 0 6px; font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; }
+.feat p { font-size: 0.92rem; }
+.case-foot { padding: 18px clamp(20px, 4vw, 40px); border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.9rem; }
+
+/* experience / about */
+.cols { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); margin-top: 36px; }
+@media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
+.tl { list-style: none; margin: 0; padding: 0; }
+.tl li { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 8px 20px; padding: 20px 0; border-top: 1px solid var(--line); transition: padding .25s; }
+.tl li:last-child { border-bottom: 1px solid var(--line); }
+.tl li:hover { padding-left: 10px; }
+.tl li:hover h3 { color: var(--accent); }
+.tl h3 { font-size: 1.3rem; font-weight: 560; transition: color .2s; }
+.tl p { color: var(--muted); font-size: 0.95rem; }
+.tl .when { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); padding-top: 5px; }
+@media (max-width: 520px) { .tl li { grid-template-columns: 1fr; } }
+.about-text { font-family: var(--font-display); font-size: clamp(1.35rem, 2.6vw, 1.85rem); line-height: 1.3; letter-spacing: -0.01em; font-weight: 450; }
+.about-text + p { margin-top: 20px; color: var(--muted); max-width: 52ch; }
+.stack-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.pill { border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 0.88rem; background: var(--surface); }
+.edu { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 12px; }
+.edu li { display: flex; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+.edu span { color: var(--muted); font-size: 0.9rem; text-align: right; }
+
+/* contact */
+.contact { margin-top: clamp(64px, 10vw, 120px); border-top: 1px solid var(--line); padding-block: clamp(56px, 9vw, 110px) 40px; }
+.contact h2 { font-size: clamp(2.4rem, 8vw, 6rem); max-width: 14ch; }
+.contact .lede { margin-top: 20px; color: var(--muted); max-width: 44ch; font-size: 1.1rem; }
+.mail { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 32px; }
+.mail code { font-family: var(--font-mono); font-size: clamp(0.9rem, 2.4vw, 1.15rem); border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 10px 16px; overflow-wrap: anywhere; user-select: all; }
+footer { padding-block: 24px max(24px, 0px); border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
+footer .in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+footer a { text-decoration: none; } footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="in">
+    <a class="brand" href="#top" aria-label="Sankalp Patil, back to top">Sankalp<span>.</span>Patil</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#work">Work</a><a href="#case">Case study</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <a class="btn" href="https://drive.google.com/file/d/1FS_L28RDtHggxi8UnTKf5xXcWw4rO8YG/view?usp=drive_link" target="_blank" rel="noopener">Resume</a>
+      <button class="btn icon-btn" id="theme" type="button" aria-label="Switch between dark and light theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero">
+    <div class="in">
+      <p class="label">Greetings, I am Sankalp · Mumbai</p>
+      <h1>Creating useful, usable &amp; enjoyable designs</h1>
+      <p class="lede">An innovative <b>UX/UI designer and researcher</b> creating future user experience. Engineer by training, six years into designing apps, web products and dashboards.</p>
+      <div class="cta">
+        <a class="btn solid" href="#contact">Let's connect</a>
+        <a class="btn" href="#work">See the work</a>
+      </div>
+
+      <div class="line-card" aria-label="Interactive train line, a sample of the live location feature designed for Yatri">
+        <div class="line-head">
+          <span class="label">Western Line · live location demo</span>
+          <span class="status" role="status" aria-live="polite"><span class="pulse"></span><span id="status">—</span></span>
+        </div>
+        <div class="track" id="track">
+          <div class="rail"></div><div class="fill" id="fill"></div>
+          <div class="train" id="train"></div>
+        </div>
+        <p class="line-note">Tap a station to send the train there. Sample data, not live. This is the live-location pattern I designed for the Yatri app.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="work">
+    <div class="in">
+      <div class="sec-head">
+        <div><p class="label">Featured work</p><h2>Design showcase</h2></div>
+        <div class="chips" role="group" aria-label="Filter projects">
+          <button class="chip" type="button" data-f="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" data-f="app" aria-pressed="false">Apps</button>
+          <button class="chip" type="button" data-f="redesign" aria-pressed="false">Redesigns</button>
+          <button class="chip" type="button" data-f="dash" aria-pressed="false">Dashboards</button>
+        </div>
+      </div>
+      <ul class="rows" id="rows">
+        <li data-c="app">
+          <button class="row" type="button" id="open-yatri">
+            <div><h3>Yatri</h3><p class="sub">Official Indian Railway app, UI/UX design</p></div>
+            <div class="tags"><span class="tag hot">Case study below</span><span class="tag">Transport</span></div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </button>
+        </li>
+        <li data-c="app">
+          <a class="row" href="https://sankalppatil.framer.website/bugsmash" target="_blank" rel="noopener">
+            <div><h3>Bugsmash</h3><p class="sub">App built from scratch</p></div>
+            <div class="tags"><span class="tag">Mobile app</span></div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+        </li>
+        <li data-c="redesign">
+          <a class="row" href="https://sankalppatil.framer.website/thingstodo" target="_blank" rel="noopener">
+            <div><h3>Things to do</h3><p class="sub">Redesigning the app for a better experience</p></div>
+            <div class="tags"><span class="tag">Redesign</span></div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+        </li>
+        <li data-c="redesign">
+          <a class="row" href="https://medium.com/@patilsankalp786/redesigning-the-icici-bank-app-a-journey-towards-accessibility-inclusive-design-3bf614c8a44a" target="_blank" rel="noopener">
+            <div><h3>ICICI Mobile App</h3><p class="sub">A journey towards accessibility and inclusive design</p></div>
+            <div class="tags"><span class="tag">Redesign</span><span class="tag">Accessibility</span><span class="tag">Medium</span></div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+        </li>
+        <li data-c="dash">
+          <a class="row" href="https://medium.com/@patilsankalp786/redefining-logistics-efficiency-the-smart-transport-dashboard-case-study-64aed3699e8d" target="_blank" rel="noopener">
+            <div><h3>Transport &amp; Logistics Dashboard</h3><p class="sub">A dashboard designed to help managers</p></div>
+            <div class="tags"><span class="tag">Dashboard</span><span class="tag">Medium</span></div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+        </li>
+        <li data-c="app">
+          <div class="row soon">
+            <div><h3>OHO Tenant</h3><p class="sub">App built from scratch</p></div>
+            <div class="tags"><span class="tag">Coming soon</span></div>
+            <span></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="case">
+    <div class="in">
+      <p class="label">Real application case study</p>
+      <h2 style="font-size:clamp(2rem,5vw,3.4rem);margin-top:10px">Yatri, from research to release</h2>
+      <div class="case">
+        <div class="case-top">
+          <div>
+            <p class="label">Transportation &amp; mobility</p>
+            <h3>A calmer way to commute on Mumbai local trains</h3>
+            <p style="margin-top:14px;max-width:56ch">Yatri gives commuters real-time train updates, alternate routes and digital ticketing, whether they ride daily, now and then, or are new to the city.</p>
+          </div>
+          <div class="meta">
+            <div><span class="label">My role</span><span>UX researcher, UX designer, UI designer, motion and graphic designer</span></div>
+            <div><span class="label">Method</span><span>Interviews, station shadowing, survey</span></div>
+          </div>
+        </div>
+        <div class="tablist" role="tablist" aria-label="Case study sections">
+          <button class="tab" role="tab" id="t-problem" aria-controls="p-problem" aria-selected="true" type="button">Problem</button>
+          <button class="tab" role="tab" id="t-research" aria-controls="p-research" aria-selected="false" tabindex="-1" type="button">Research</button>
+          <button class="tab" role="tab" id="t-solution" aria-controls="p-solution" aria-selected="false" tabindex="-1" type="button">Solution</button>
+          <button class="tab" role="tab" id="t-impact" aria-controls="p-impact" aria-selected="false" tabindex="-1" type="button">Impact</button>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p-problem" aria-labelledby="t-problem">
+          <div class="two">
+            <div>
+              <h4>Problem statement</h4>
+              <p>Urban commuters face unreliable train schedules, a lack of real-time updates, and difficulty finding the best route from point A to point B.</p>
+              <p style="margin-top:12px">The goal: an app that gives the best train options between two stations, plus live train status and alerts for delays or cancellations, so people can plan and travel with ease.</p>
+            </div>
+            <div>
+              <div class="big">7.5M</div>
+              <p style="margin-top:8px">daily commuters on the Mumbai local network</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p-research" aria-labelledby="t-research" hidden>
+          <div class="two">
+            <div>
+              <h4>Survey of 500+ app users</h4>
+              <div class="bars" data-bars>
+                <div><div class="bar-top"><span>Want live location updates</span><b>72%</b></div><div class="bar"><i style="width:72%"></i></div></div>
+                <div><div class="bar-top"><span>Want favorite routes</span><b>60%</b></div><div class="bar"><i style="width:60%"></i></div></div>
+                <div><div class="bar-top"><span>Want announcements on schedules, megablocks and cancellations</span><b>50%</b></div><div class="bar"><i style="width:50%"></i></div></div>
+              </div>
+            </div>
+            <div>
+              <h4>What I saw and heard</h4>
+              <ul class="facts">
+                <li><b>15 daily commuters</b> interviewed: office workers, students and tourists.</li>
+                <li>Riders check schedules several times a day but struggle with navigation.</li>
+                <li>First-time users and tourists found the app confusing without onboarding.</li>
+                <li>At stations, people were unsure which platform to take, doubted the shown train location, and fell back to Google Maps when trains were delayed.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p-solution" aria-labelledby="t-solution" hidden>
+          <h4>Four screens that carry the journey</h4>
+          <p>Pick a start, pick a destination, and get a list of trains with their real-time locations.</p>
+          <div class="feat" style="margin-top:20px">
+            <div><h5>Home</h5><p>Choose Local Train, Metro, Mono, Bus or Ferry. See the nearest station and distance, favorite routes, train alerts, fares, the rail map and station amenities.</p></div>
+            <div><h5>Live location</h5><p>A moving train icon on the map, time to the next station, and a journey timeline with a progress line. A count of riders who set alerts adds trust.</p></div>
+            <div><h5>News and announcements</h5><p>Delays, platform changes and alternate routes in a clear announcement bar, so people stay informed and calm.</p></div>
+            <div><h5>Explore</h5><p>Famous places and Mumbai foods turn a travel tool into something people enjoy opening.</p></div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p-impact" aria-labelledby="t-impact" hidden>
+          <div class="two">
+            <div>
+              <div class="big">150x</div>
+              <p style="margin-top:8px">user engagement, as reported on the case study page, after the Explore tab and referral feature.</p>
+            </div>
+            <div>
+              <h4>Live train locations go public</h4>
+              <p>Live train locations for Western Railway were unveiled at the Yatri event at Mumbai Division CSMT. Commuters can view and share a train's location straight from the schedule list.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-foot">
+          <span>Illustrations, GIFs and motion for Yatri are on the full page.</span>
+          <a class="btn" href="https://sankalppatil.framer.website/yatri" target="_blank" rel="noopener">Read the full case study</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="experience">
+    <div class="in">
+      <div class="sec-head"><div><p class="label">Experience · 6 years</p><h2>Where I've worked</h2></div></div>
+      <div class="cols">
+        <ol class="tl">
+          <li><span class="when">Jun 2023 – Oct 2024</span><div><h3>Tech Mahindra</h3><p>Senior UX Associate</p></div></li>
+          <li><span class="when">Feb 2022 – Apr 2023</span><div><h3>CDP India Pvt Ltd</h3><p>UI/UX Designer</p></div></li>
+          <li><span class="when">Feb 2020 – Jan 2022</span><div><h3>Geecon Systems Pvt Ltd</h3><p>Graphic Designer</p></div></li>
+          <li><span class="when">Sep 2018 – Jan 2020</span><div><h3>Swan Aluminium Pvt Ltd</h3><p>Design Engineer</p></div></li>
+        </ol>
+        <div>
+          <p class="label">Education</p>
+          <ul class="edu">
+            <li>B.E. Mechanical Engineering <span>MITM, Oras<br>2012 – 2016</span></li>
+            <li>HSC Science <span>RK College, Mumbai<br>2010 – 2012</span></li>
+            <li>SSC <span>St Anthony High School, Mumbai<br>2009 – 2010</span></li>
+          </ul>
+          <p class="label" style="margin-top:32px">Certifications</p>
+          <div class="stack-list">
+            <span class="pill">Google UX Design (Coursera)</span><span class="pill">Adobe</span><span class="pill">Blender 3D</span><span class="pill">HTML &amp; CSS Advanced</span><span class="pill">UX Fundamentals</span><span class="pill">App and Web Design</span><span class="pill">Agile Business</span><span class="pill">Solidware</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="in">
+      <p class="label">About me</p>
+      <div class="cols" style="margin-top:20px">
+        <p class="about-text">Greetings from Mumbai. I'm an engineer turned UX/UI designer who turns ideas into impactful designs with creativity and technical know-how.</p>
+        <div>
+          <p style="color:var(--muted)">I do more than design. I make videos, 3D mockups and motion graphics. Away from the screen I read, take long bike rides and play cricket.</p>
+          <p class="label" style="margin-top:28px">Also in the toolkit</p>
+          <div class="stack-list">
+            <span class="pill">Illustration</span><span class="pill">3D design</span><span class="pill">Motion graphics</span><span class="pill">GIFs</span><span class="pill">Video</span>
+          </div>
+          <a class="btn" style="margin-top:24px" href="https://sankalppatil.framer.website/motion" target="_blank" rel="noopener">See the motion work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="in">
+      <p class="label">Contact</p>
+      <h2 style="margin-top:14px">Let's give your idea a soul</h2>
+      <p class="lede">I enjoy creating products, applications, web applications and dashboards.</p>
+      <div class="mail">
+        <code id="email">patilsankalp786@gmail.com</code>
+        <button class="btn solid" id="copy" type="button">Copy email</button>
+        <a class="btn" href="mailto:patilsankalp786@gmail.com">Open mail app</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in">
+    <span>© 2026 Sankalp Patil · Mumbai</span>
+    <span><a href="https://sankalppatil.framer.website/" target="_blank" rel="noopener">Original portfolio</a> · <a href="https://drive.google.com/file/d/1FS_L28RDtHggxi8UnTKf5xXcWw4rO8YG/view?usp=drive_link" target="_blank" rel="noopener">Resume</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  /* theme toggle */
+  var mq = window.matchMedia('(prefers-color-scheme: light)');
+  try { var saved = localStorage.getItem('sp-theme'); if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved); } catch (e) {}
+  document.getElementById('theme').addEventListener('click', function () {
+    var cur = root.getAttribute('data-theme') || (mq.matches ? 'light' : 'dark');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('sp-theme', next); } catch (e) {}
+  });
+
+  /* hero glow follows pointer */
+  var hero = document.getElementById('hero');
+  hero.addEventListener('pointermove', function (e) {
+    var r = hero.getBoundingClientRect();
+    hero.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    hero.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
+
+  /* live train line */
+  var stations = [
+    { code: 'CCG', name: 'Churchgate' }, { code: 'DR', name: 'Dadar' }, { code: 'BA', name: 'Bandra' },
+    { code: 'ADH', name: 'Andheri' }, { code: 'BVI', name: 'Borivali' }, { code: 'VR', name: 'Virar' }
+  ];
+  var last = stations.length - 1;
+  var track = document.getElementById('track');
+  var trainEl = document.getElementById('train');
+  var fillEl = document.getElementById('fill');
+  var statusEl = document.getElementById('status');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pos = 1.6, target = 3, raf = 0, btns = [];
+
+  stations.forEach(function (s, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'stn'; b.style.left = (i / last * 100) + '%';
+    b.setAttribute('aria-pressed', 'false');
+    b.setAttribute('aria-label', 'Send the train to ' + s.name);
+    b.innerHTML = '<i></i><b>' + s.code + '</b><small>' + s.name + '</small>';
+    b.addEventListener('click', function () { go(i); });
+    track.appendChild(b); btns.push(b);
+  });
+
+  function render() {
+    var pct = pos / last * 100;
+    trainEl.style.left = pct + '%';
+    fillEl.style.width = pct + '%';
+    btns.forEach(function (b, i) { b.setAttribute('aria-pressed', i === target ? 'true' : 'false'); });
+    var d = Math.abs(target - pos);
+    if (d < 0.02) {
+      statusEl.textContent = 'Arrived at ' + stations[target].name;
+    } else {
+      var next = pos < target ? Math.ceil(pos + 0.0001) : Math.floor(pos - 0.0001);
+      statusEl.textContent = 'Next ' + stations[next].name + ' · arriving in ' + Math.max(1, Math.round(d * 11)) + ' min';
+    }
+  }
+  function go(i) {
+    target = i;
+    cancelAnimationFrame(raf);
+    if (reduce) { pos = i; render(); return; }
+    var from = pos, dist = Math.abs(i - from), dur = Math.min(1900, 450 + dist * 380), t0 = null;
+    if (dist < 0.01) { render(); return; }
+    function step(t) {
+      if (t0 === null) t0 = t;
+      var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      pos = from + (i - from) * e; render();
+      if (k < 1) raf = requestAnimationFrame(step);
+    }
+    raf = requestAnimationFrame(step);
+  }
+  render();
+
+  /* work filter */
+  var chips = document.querySelectorAll('.chip');
+  var items = document.querySelectorAll('#rows > li');
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      chips.forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
+      var f = c.getAttribute('data-f');
+      items.forEach(function (li) { li.hidden = !(f === 'all' || li.getAttribute('data-c') === f); });
+    });
+  });
+
+  /* case study tabs */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  function select(tab, focus) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) tab.focus();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(t, false); });
+    t.addEventListener('keydown', function (e) {
+      var n = null;
+      if (e.key === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+      if (e.key === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (n) { e.preventDefault(); select(n, true); }
+    });
+  });
+  document.getElementById('open-yatri').addEventListener('click', function () {
+    select(tabs[0], false);
+    document.getElementById('case').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  /* copy email */
+  var copyBtn = document.getElementById('copy');
+  var emailEl = document.getElementById('email');
+  function selectEmail() {
+    var r = document.createRange(); r.selectNodeContents(emailEl);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+  copyBtn.addEventListener('click', function () {
+    var done = function (msg) { copyBtn.textContent = msg; setTimeout(function () { copyBtn.textContent = 'Copy email'; }, 2000); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(emailEl.textContent).then(function () { done('Copied'); }, function () { selectEmail(); done('Press copy to finish'); });
+    } else { selectEmail(); done('Press copy to finish'); }
+  });
+})();
+</script>
+</body>
+</html>
