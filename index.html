@@ -86,7 +86,7 @@ section { scroll-margin-top: calc(72px + env(safe-area-inset-top, 0px)); }
 .btn.solid:hover { transform: translateY(-1px); }
 .icon-btn { width: 38px; height: 38px; padding: 0; justify-content: center; }
 .icon-btn svg { width: 17px; height: 17px; }
-@media (max-width: 760px) { .nav { display: none; } }
+
 
 /* hero */
 .hero { position: relative; overflow: hidden; padding-block: clamp(48px, 9vw, 104px) 40px; }
@@ -217,10 +217,39 @@ a.row:hover .arrow, button.row:hover .arrow { transform: translate(3px, -3px); c
 footer { padding-block: 24px max(24px, 0px); border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
 footer .in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 footer a { text-decoration: none; } footer a:hover { color: var(--accent); }
+
+/* usability additions */
+.skip { position: absolute; left: 16px; top: -80px; z-index: 100; background: var(--accent); color: var(--accent-ink); padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+.skip:focus { top: calc(8px + env(safe-area-inset-top, 0px)); }
+.progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent); transform-origin: left; transform: scaleX(0); }
+.nav a { position: relative; padding-block: 6px; }
+.nav a[aria-current="true"] { color: var(--fg); }
+.nav a[aria-current="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; border-radius: 2px; background: var(--accent); }
+.try { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; background: var(--accent); color: var(--accent-ink); border-radius: 999px; padding: 3px 10px; margin-right: 10px; display: inline-block; animation: nudge 2s ease-in-out infinite; }
+.try[hidden] { display: none; }
+@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+.go { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--muted); transition: color .2s; white-space: nowrap; }
+a.row:hover .go, button.row:hover .go { color: var(--accent); }
+.hint-line { color: var(--muted); margin-top: 18px; max-width: 64ch; font-size: 0.95rem; }
+.next-step { margin-top: 28px; }
+.tablist { scroll-margin-top: calc(80px + env(safe-area-inset-top, 0px)); }
+.to-top { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 40; opacity: 0; pointer-events: none; transform: translateY(8px); transition: opacity .25s, transform .25s; background: var(--surface); }
+.to-top.show { opacity: 1; pointer-events: auto; transform: none; }
+.chip small { font-family: var(--font-mono); font-size: 0.72rem; opacity: 0.7; margin-left: 6px; }
+@media (max-width: 760px) {
+  .top .in { flex-wrap: wrap; height: auto; padding-top: 10px; row-gap: 0; }
+  .brand { padding-bottom: 6px; } .tools { padding-bottom: 6px; }
+  .nav { display: flex; order: 3; width: 100%; overflow-x: auto; gap: 22px; padding: 6px 0 10px; scrollbar-width: none; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { white-space: nowrap; }
+  section { scroll-margin-top: calc(112px + env(safe-area-inset-top, 0px)); }
+}
+@media (max-width: 560px) { .tools .connect { display: none; } }
 </style>
 </head>
 <body>
 
+<a class="skip" href="#work">Skip to the work</a>
 <header class="top">
   <div class="in">
     <a class="brand" href="#top" aria-label="Sankalp Patil, back to top">Sankalp<span>.</span>Patil</a>
@@ -228,12 +257,14 @@ footer a { text-decoration: none; } footer a:hover { color: var(--accent); }
       <a href="#work">Work</a><a href="#case">Case study</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a>
     </nav>
     <div class="tools">
+      <a class="btn solid connect" href="#contact">Let's connect</a>
       <a class="btn" href="https://drive.google.com/file/d/1FS_L28RDtHggxi8UnTKf5xXcWw4rO8YG/view?usp=drive_link" target="_blank" rel="noopener">Resume</a>
       <button class="btn icon-btn" id="theme" type="button" aria-label="Switch between dark and light theme">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </button>
     </div>
   </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
 </header>
 
 <main id="top">
@@ -249,7 +280,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--accent); }
 
       <div class="line-card" aria-label="Interactive train line, a sample of the live location feature designed for Yatri">
         <div class="line-head">
-          <span class="label">Western Line · live location demo</span>
+          <span class="label"><span class="try" id="try">Try it</span>Western Line · live location demo</span>
           <span class="status" role="status" aria-live="polite"><span class="pulse"></span><span id="status">—</span></span>
         </div>
         <div class="track" id="track">
@@ -272,40 +303,41 @@ footer a { text-decoration: none; } footer a:hover { color: var(--accent); }
           <button class="chip" type="button" data-f="dash" aria-pressed="false">Dashboards</button>
         </div>
       </div>
+      <p class="hint-line">Pick a project to open it. Yatri opens its case study further down this page. The others open in a new tab.</p>
       <ul class="rows" id="rows">
         <li data-c="app">
           <button class="row" type="button" id="open-yatri">
             <div><h3>Yatri</h3><p class="sub">Official Indian Railway app, UI/UX design</p></div>
             <div class="tags"><span class="tag hot">Case study below</span><span class="tag">Transport</span></div>
-            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+            <span class="go"><span>Case study</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span>
           </button>
         </li>
         <li data-c="app">
           <a class="row" href="https://sankalppatil.framer.website/bugsmash" target="_blank" rel="noopener">
             <div><h3>Bugsmash</h3><p class="sub">App built from scratch</p></div>
             <div class="tags"><span class="tag">Mobile app</span></div>
-            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+            <span class="go"><span>Open</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
           </a>
         </li>
         <li data-c="redesign">
           <a class="row" href="https://sankalppatil.framer.website/thingstodo" target="_blank" rel="noopener">
             <div><h3>Things to do</h3><p class="sub">Redesigning the app for a better experience</p></div>
             <div class="tags"><span class="tag">Redesign</span></div>
-            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+            <span class="go"><span>Open</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
           </a>
         </li>
         <li data-c="redesign">
           <a class="row" href="https://medium.com/@patilsankalp786/redesigning-the-icici-bank-app-a-journey-towards-accessibility-inclusive-design-3bf614c8a44a" target="_blank" rel="noopener">
             <div><h3>ICICI Mobile App</h3><p class="sub">A journey towards accessibility and inclusive design</p></div>
             <div class="tags"><span class="tag">Redesign</span><span class="tag">Accessibility</span><span class="tag">Medium</span></div>
-            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+            <span class="go"><span>Read on Medium</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
           </a>
         </li>
         <li data-c="dash">
           <a class="row" href="https://medium.com/@patilsankalp786/redefining-logistics-efficiency-the-smart-transport-dashboard-case-study-64aed3699e8d" target="_blank" rel="noopener">
             <div><h3>Transport &amp; Logistics Dashboard</h3><p class="sub">A dashboard designed to help managers</p></div>
             <div class="tags"><span class="tag">Dashboard</span><span class="tag">Medium</span></div>
-            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+            <span class="go"><span>Read on Medium</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
           </a>
         </li>
         <li data-c="app">
@@ -474,6 +506,8 @@ footer a { text-decoration: none; } footer a:hover { color: var(--accent); }
   </div>
 </footer>
 
+<button class="btn icon-btn to-top" id="to-top" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
 <script>
 (function () {
   var root = document.documentElement;
@@ -533,6 +567,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--accent); }
     }
   }
   function go(i) {
+    var tryChip = document.getElementById('try'); if (tryChip) tryChip.hidden = true;
     target = i;
     cancelAnimationFrame(raf);
     if (reduce) { pos = i; render(); return; }
@@ -597,6 +632,48 @@ footer a { text-decoration: none; } footer a:hover { color: var(--accent); }
       navigator.clipboard.writeText(emailEl.textContent).then(function () { done('Copied'); }, function () { selectEmail(); done('Press copy to finish'); });
     } else { selectEmail(); done('Press copy to finish'); }
   });
+  /* filter counts */
+  chips.forEach(function (c) {
+    var f = c.getAttribute('data-f'), n = 0;
+    items.forEach(function (li) { if (f === 'all' || li.getAttribute('data-c') === f) n++; });
+    var s = document.createElement('small'); s.textContent = n; c.appendChild(s);
+  });
+
+  /* next-step buttons in the case study */
+  var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+  panels.forEach(function (p, i) {
+    var wrap = document.createElement('div'); wrap.className = 'next-step';
+    var b;
+    if (i < tabs.length - 1) {
+      b = document.createElement('button'); b.type = 'button';
+      b.textContent = 'Next: ' + tabs[i + 1].textContent + ' \u2192';
+      b.addEventListener('click', function () {
+        select(tabs[i + 1], false);
+        document.querySelector('.tablist').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      });
+    } else {
+      b = document.createElement('a'); b.href = '#work'; b.textContent = 'Back to all projects \u2191';
+    }
+    b.className = 'btn'; wrap.appendChild(b); p.appendChild(wrap);
+  });
+
+  /* active section, scroll progress, back to top */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+  var navSecs = navLinks.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  var prog = document.getElementById('progress'), topBtn = document.getElementById('to-top');
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, window.scrollY / h) : 0) + ')';
+    topBtn.classList.toggle('show', window.scrollY > 700);
+    var y = window.scrollY + 160, cur = -1;
+    navSecs.forEach(function (s, i) { if (s && s.offsetTop <= y) cur = i; });
+    if (h > 0 && window.scrollY >= h - 4) cur = navLinks.length - 1;
+    navLinks.forEach(function (a, i) { if (i === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+  topBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
 })();
 </script>
 </body>
