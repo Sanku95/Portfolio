@@ -218,6 +218,56 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
   section { scroll-margin-top: calc(112px + env(safe-area-inset-top, 0px)); }
 }
 @media (max-width: 560px) { .tools .connect { display: none; } }
+
+/* playful hero */
+.hero { padding-block: clamp(40px, 7vw, 88px) clamp(32px, 5vw, 64px); }
+.hero h1 { font-size: clamp(2.6rem, 7.2vw, 5.6rem); max-width: 11ch; transition: font-weight .12s linear; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+@media (max-width: 940px) { .hero-grid { grid-template-columns: 1fr; } }
+.wave { display: inline-block; transform-origin: 70% 75%; animation: wave 2.4s ease-in-out infinite; }
+@keyframes wave { 0%, 60%, 100% { transform: rotate(0); } 10%, 30% { transform: rotate(16deg); } 20%, 40% { transform: rotate(-10deg); } 50% { transform: rotate(8deg); } }
+.wavy { text-decoration: underline wavy var(--accent); text-decoration-thickness: 0.055em; text-underline-offset: 0.12em; text-decoration-skip-ink: none; }
+.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.8s infinite; flex: none; display: inline-block; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--accent); } 70% { box-shadow: 0 0 0 9px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+.canvas {
+  position: relative; height: clamp(400px, 46vw, 480px); overflow: hidden; border: 1px solid var(--line); border-radius: 22px;
+  background-color: var(--surface); background-image: radial-gradient(var(--line) 1.3px, transparent 1.4px); background-size: 22px 22px;
+}
+.canvas-tag { position: absolute; left: 16px; top: 12px; pointer-events: none; }
+.canvas-note { margin-top: 12px; color: var(--muted); font-size: 0.85rem; max-width: 52ch; }
+.sticker {
+  position: absolute; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px;
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--fg) 10%, transparent);
+  transition: box-shadow .2s, transform .2s, border-color .2s;
+}
+.sticker:hover { border-color: var(--muted); }
+.sticker.lift { cursor: grabbing; transform: scale(1.04) rotate(-1.2deg); box-shadow: 0 18px 40px color-mix(in srgb, var(--fg) 22%, transparent); }
+.bob { animation: bob 6s ease-in-out infinite; animation-delay: var(--d, 0s); }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.sticker .srow { display: flex; align-items: center; gap: 12px; }
+.sticker .srow.between { justify-content: space-between; margin-bottom: 8px; }
+.s-btn { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; border-radius: 999px; padding: 12px 22px; }
+.s-btn:hover { border-color: var(--accent); }
+.s-toggle { font-size: 0.92rem; }
+.switch { position: relative; width: 44px; height: 26px; border-radius: 999px; background: var(--line); transition: background .2s; flex: none; }
+.knob { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--fg); transition: transform .3s cubic-bezier(.3, 1.5, .5, 1), background .2s; }
+.s-toggle[aria-checked="true"] .switch { background: var(--accent); }
+.s-toggle[aria-checked="true"] .knob { transform: translateX(18px); background: var(--accent-ink); }
+.s-card { width: min(228px, 66%); }
+.s-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 4px 0 8px; letter-spacing: -0.01em; }
+.s-pill { display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+.s-slider { width: min(232px, 68%); font-size: 0.85rem; }
+.s-slider output { font-family: var(--font-mono); color: var(--accent); font-variant-numeric: tabular-nums; }
+.s-slider input { width: 100%; accent-color: var(--accent); cursor: pointer; margin: 0; }
+.sw { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--bg); background: var(--c); cursor: pointer; padding: 0; box-shadow: 0 0 0 1px var(--line); transition: transform .2s, box-shadow .2s; }
+.sw:hover { transform: scale(1.15); }
+.sw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--fg); }
+.ghost { position: absolute; left: 0; top: 0; z-index: 5; pointer-events: none; display: none; align-items: flex-start; gap: 2px; opacity: 0; transition: opacity .2s; will-change: transform; }
+.ghost span { margin-top: 14px; background: var(--accent); color: var(--accent-ink); font-size: 0.74rem; font-weight: 600; padding: 3px 9px; border-radius: 6px 12px 12px 12px; }
+.ghost.on { opacity: 1; }
+@media (hover: hover) and (pointer: fine) { .ghost { display: flex; } }
 </style>
 </head>
 <body>
@@ -242,13 +292,58 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
 
 <main id="top">
   <section class="hero" id="hero">
+    <div class="ghost" id="ghost" aria-hidden="true">
+      <svg viewBox="0 0 16 20" width="16" height="20"><path d="M1 1l12 8.5-5.2 1.1L10.4 18 7.6 19 5 11.9 1 15z" fill="var(--accent)" stroke="var(--bg)" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      <span>Sankalp</span>
+    </div>
     <div class="in">
-      <p class="label">Greetings, I am Sankalp · Mumbai</p>
-      <h1>Creating useful, usable &amp; enjoyable designs</h1>
-      <p class="lede">An innovative <b>UX/UI designer and researcher</b> creating future user experience. Engineer by training, six years into designing apps, web products and dashboards.</p>
-      <div class="cta">
-        <a class="btn solid" href="#contact">Let's connect</a>
-        <a class="btn" href="#work">See the work</a>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="label">Greetings <span class="wave" aria-hidden="true">&#128400;&#65039;</span> I am Sankalp · Mumbai</p>
+          <h1>Creating useful, usable &amp; <span class="wavy">enjoyable</span> designs</h1>
+          <p class="lede">An innovative <b>UX/UI designer and researcher</b> creating future user experience. Engineer by training, six years into designing apps, web products and dashboards.</p>
+          <div class="cta">
+            <a class="btn solid" href="#contact">Let's connect</a>
+            <a class="btn" href="#work">See the work</a>
+          </div>
+        </div>
+        <div class="hero-art">
+          <div class="canvas" id="canvas" role="group" aria-label="Playful design canvas. Drag the pieces around.">
+            <span class="canvas-tag label">Canvas · drag anything</span>
+
+            <div class="sticker s-btn" data-act="connect" role="button" tabindex="0" data-x="0.07" data-y="0.14" style="--d:-0.5s"><div class="bob">Let's connect</div></div>
+
+            <div class="sticker s-toggle" data-act="theme" role="switch" aria-checked="true" aria-label="Dark mode" tabindex="0" data-x="0.5" data-y="0.1" style="--d:-2s">
+              <div class="bob srow"><span>Dark mode</span><span class="switch"><i class="knob"></i></span></div>
+            </div>
+
+            <div class="sticker s-card" data-act="case" role="button" tabindex="0" aria-label="Open the Yatri case study" data-x="0.08" data-y="0.31" style="--d:-3.2s">
+              <div class="bob">
+                <p class="label">Yatri · live location</p>
+                <p class="s-title">Next station</p>
+                <p class="s-pill"><span class="pulse"></span>Arriving in 5 min</p>
+              </div>
+            </div>
+
+            <div class="sticker s-slider" data-x="0.3" data-y="0.6" style="--d:-1.4s">
+              <div class="bob">
+                <div class="srow between"><label for="wt">Headline weight</label><output id="wtv" for="wt">650</output></div>
+                <input id="wt" type="range" min="400" max="800" step="10" value="650">
+              </div>
+            </div>
+
+            <div class="sticker s-sw" data-x="0.06" data-y="0.82" style="--d:-4s">
+              <div class="bob srow">
+                <span class="label">Accent</span>
+                <button class="sw" type="button" aria-label="Amber accent" style="--c:#ffb43a"></button>
+                <button class="sw" type="button" aria-label="Blue accent" style="--c:#6ea8ff"></button>
+                <button class="sw" type="button" aria-label="Mint accent" style="--c:#4fe0c2"></button>
+                <button class="sw" type="button" aria-label="Coral accent" style="--c:#ff7a8a"></button>
+              </div>
+            </div>
+          </div>
+          <p class="canvas-note">These pieces are live. The toggle, slider and swatches change this page, and the card opens the Yatri case study.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -473,15 +568,32 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
 (function () {
   var root = document.documentElement;
 
-  /* theme toggle */
+  /* theme and accent */
   var mq = window.matchMedia('(prefers-color-scheme: light)');
   try { var saved = localStorage.getItem('sp-theme'); if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved); } catch (e) {}
-  document.getElementById('theme').addEventListener('click', function () {
-    var cur = root.getAttribute('data-theme') || (mq.matches ? 'light' : 'dark');
-    var next = cur === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('sp-theme', next); } catch (e) {}
-  });
+  var accents = [
+    { d: '#ffb43a', l: '#a85a00' }, { d: '#6ea8ff', l: '#1f5fd1' },
+    { d: '#4fe0c2', l: '#0a7d6e' }, { d: '#ff7a8a', l: '#c2334a' }
+  ];
+  var accIdx = 0;
+  try { var sa = parseInt(localStorage.getItem('sp-accent'), 10); if (sa >= 0 && sa < accents.length) accIdx = sa; } catch (e) {}
+  function effective() { return root.getAttribute('data-theme') || (mq.matches ? 'light' : 'dark'); }
+  function rgba(hex, a) { var n = parseInt(hex.slice(1), 16); return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')'; }
+  function syncUI() {
+    var dark = effective() === 'dark', c = dark ? accents[accIdx].d : accents[accIdx].l;
+    root.style.setProperty('--accent', c);
+    root.style.setProperty('--glow', rgba(c, dark ? 0.14 : 0.1));
+    root.style.setProperty('--accent-ink', dark ? '#10141a' : '#ffffff');
+    var tg = document.querySelector('[data-act="theme"]');
+    if (tg) tg.setAttribute('aria-checked', dark ? 'true' : 'false');
+    var sws = document.querySelectorAll('.sw');
+    for (var i = 0; i < sws.length; i++) sws[i].setAttribute('aria-pressed', i === accIdx ? 'true' : 'false');
+  }
+  function setTheme(n) { root.setAttribute('data-theme', n); try { localStorage.setItem('sp-theme', n); } catch (e) {} syncUI(); }
+  function toggleTheme() { setTheme(effective() === 'dark' ? 'light' : 'dark'); }
+  document.getElementById('theme').addEventListener('click', toggleTheme);
+  if (mq.addEventListener) mq.addEventListener('change', syncUI);
+  syncUI();
 
   /* hero glow follows pointer */
   var hero = document.getElementById('hero');
@@ -566,6 +678,77 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
     }
     b.className = 'btn'; wrap.appendChild(b); p.appendChild(wrap);
   });
+
+  /* hero canvas */
+  var cv = document.getElementById('canvas');
+  var stickers = Array.prototype.slice.call(cv.querySelectorAll('.sticker'));
+  var zTop = 5;
+  function act(s) {
+    var a = s.getAttribute('data-act');
+    if (a === 'connect') document.getElementById('contact').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+    else if (a === 'theme') toggleTheme();
+    else if (a === 'case') { select(tabs[0], false); document.getElementById('case').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
+  }
+  stickers.forEach(function (s) {
+    s.style.left = (parseFloat(s.getAttribute('data-x')) * 100) + '%';
+    s.style.top = (parseFloat(s.getAttribute('data-y')) * 100) + '%';
+    var down = false, moved = false, sx = 0, sy = 0, ox = 0, oy = 0;
+    s.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('input, button')) return;
+      down = true; moved = false;
+      try { s.setPointerCapture(e.pointerId); } catch (err) {}
+      var r = s.getBoundingClientRect();
+      sx = e.clientX; sy = e.clientY; ox = e.clientX - r.left; oy = e.clientY - r.top;
+      s.style.zIndex = ++zTop; s.classList.add('lift');
+    });
+    s.addEventListener('pointermove', function (e) {
+      if (!down) return;
+      if (Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 5) moved = true;
+      if (!moved) return;
+      var c = cv.getBoundingClientRect();
+      var x = Math.max(0, Math.min(c.width - s.offsetWidth, e.clientX - c.left - ox));
+      var y = Math.max(0, Math.min(c.height - s.offsetHeight, e.clientY - c.top - oy));
+      s.style.left = (x / c.width * 100) + '%';
+      s.style.top = (y / c.height * 100) + '%';
+    });
+    s.addEventListener('pointerup', function () {
+      if (!down) return;
+      down = false; s.classList.remove('lift');
+      if (!moved && s.getAttribute('data-act')) act(s);
+    });
+    s.addEventListener('pointercancel', function () { down = false; s.classList.remove('lift'); });
+    s.addEventListener('keydown', function (e) {
+      if (e.target !== s || !s.getAttribute('data-act')) return;
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(s); }
+    });
+  });
+  var swBtns = document.querySelectorAll('.sw');
+  Array.prototype.forEach.call(swBtns, function (b, i) {
+    b.addEventListener('click', function () {
+      accIdx = i; try { localStorage.setItem('sp-accent', String(i)); } catch (e) {}
+      syncUI();
+    });
+  });
+  var wt = document.getElementById('wt'), wtv = document.getElementById('wtv'), heroH1 = document.querySelector('.hero h1');
+  wt.addEventListener('input', function () { heroH1.style.fontWeight = wt.value; wtv.textContent = wt.value; });
+
+  /* name cursor that trails the pointer */
+  var ghost = document.getElementById('ghost');
+  if (ghost && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce) {
+    var gx = 0, gy = 0, tx = 0, ty = 0, running = false;
+    var loop = function () {
+      gx += (tx - gx) * 0.16; gy += (ty - gy) * 0.16;
+      ghost.style.transform = 'translate(' + gx + 'px,' + gy + 'px)';
+      if (Math.abs(tx - gx) + Math.abs(ty - gy) > 0.5) requestAnimationFrame(loop); else running = false;
+    };
+    hero.addEventListener('pointermove', function (e) {
+      var r = hero.getBoundingClientRect();
+      tx = e.clientX - r.left + 14; ty = e.clientY - r.top + 16;
+      if (!ghost.classList.contains('on')) { gx = tx; gy = ty; ghost.classList.add('on'); }
+      if (!running) { running = true; requestAnimationFrame(loop); }
+    });
+    hero.addEventListener('pointerleave', function () { ghost.classList.remove('on'); });
+  }
 
   /* active section, scroll progress, back to top */
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
