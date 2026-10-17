@@ -89,7 +89,7 @@ section { scroll-margin-top: calc(72px + env(safe-area-inset-top, 0px)); }
 
 
 /* hero */
-.hero { position: relative; overflow: hidden; padding-block: clamp(48px, 9vw, 104px) 40px; }
+.hero { position: relative; overflow: hidden; padding-block: clamp(56px, 10vw, 120px) clamp(24px, 4vw, 48px); }
 .hero::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: radial-gradient(520px circle at var(--mx, 70%) var(--my, 20%), var(--glow), transparent 70%);
@@ -99,30 +99,6 @@ section { scroll-margin-top: calc(72px + env(safe-area-inset-top, 0px)); }
 .hero .lede { margin-top: 24px; max-width: 46ch; color: var(--muted); font-size: clamp(1.02rem, 2.2vw, 1.2rem); }
 .hero .lede b { color: var(--fg); font-weight: 500; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
-
-/* live line */
-.line-card { margin-top: clamp(40px, 7vw, 72px); border: 1px solid var(--line); border-radius: 18px; background: var(--surface); padding: 20px clamp(14px, 3vw, 28px) 18px; }
-.line-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; align-items: baseline; }
-.status { font-family: var(--font-mono); font-size: 0.82rem; color: var(--fg); display: flex; align-items: center; gap: 8px; min-width: 0; }
-.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 var(--glow); animation: pulse 1.8s infinite; flex: none; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--accent); } 70% { box-shadow: 0 0 0 9px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
-.track { position: relative; height: 96px; margin: 14px 34px 0; }
-.rail { position: absolute; left: 0; right: 0; top: 30px; height: 2px; background: var(--line); border-radius: 2px; }
-.fill { position: absolute; left: 0; top: 30px; height: 2px; background: var(--accent); border-radius: 2px; width: 0; }
-.stn { position: absolute; top: 14px; transform: translateX(-50%); background: none; border: 0; padding: 6px 6px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.stn i { width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--muted); transition: border-color .2s, background .2s, transform .2s; margin-top: 2px; }
-.stn:hover i { border-color: var(--accent); transform: scale(1.25); }
-.stn[aria-pressed="true"] i { border-color: var(--accent); background: var(--accent); }
-.stn b { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 500; letter-spacing: 0.06em; }
-.stn small { font-size: 0.72rem; color: var(--muted); display: none; margin-top: -8px; white-space: nowrap; }
-@media (min-width: 640px) { .stn small { display: block; } }
-.train {
-  position: absolute; top: 20px; width: 34px; height: 22px; margin-left: -17px; border-radius: 6px 6px 4px 4px;
-  background: var(--accent); z-index: 3; pointer-events: none; box-shadow: 0 4px 18px var(--glow);
-}
-.train::before, .train::after { content: ""; position: absolute; top: 5px; width: 8px; height: 7px; border-radius: 2px; background: var(--accent-ink); opacity: .75; }
-.train::before { left: 6px; } .train::after { right: 6px; }
-.line-note { margin-top: 8px; color: var(--muted); font-size: 0.82rem; }
 
 /* work */
 .block { padding-block: clamp(56px, 9vw, 104px) 0; }
@@ -225,9 +201,6 @@ footer a { text-decoration: none; } footer a:hover { color: var(--accent); }
 .nav a { position: relative; padding-block: 6px; }
 .nav a[aria-current="true"] { color: var(--fg); }
 .nav a[aria-current="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; border-radius: 2px; background: var(--accent); }
-.try { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; background: var(--accent); color: var(--accent-ink); border-radius: 999px; padding: 3px 10px; margin-right: 10px; display: inline-block; animation: nudge 2s ease-in-out infinite; }
-.try[hidden] { display: none; }
-@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 .go { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--muted); transition: color .2s; white-space: nowrap; }
 a.row:hover .go, button.row:hover .go { color: var(--accent); }
 .hint-line { color: var(--muted); margin-top: 18px; max-width: 64ch; font-size: 0.95rem; }
@@ -276,18 +249,6 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
       <div class="cta">
         <a class="btn solid" href="#contact">Let's connect</a>
         <a class="btn" href="#work">See the work</a>
-      </div>
-
-      <div class="line-card" aria-label="Interactive train line, a sample of the live location feature designed for Yatri">
-        <div class="line-head">
-          <span class="label"><span class="try" id="try">Try it</span>Western Line · live location demo</span>
-          <span class="status" role="status" aria-live="polite"><span class="pulse"></span><span id="status">—</span></span>
-        </div>
-        <div class="track" id="track">
-          <div class="rail"></div><div class="fill" id="fill"></div>
-          <div class="train" id="train"></div>
-        </div>
-        <p class="line-note">Tap a station to send the train there. Sample data, not live. This is the live-location pattern I designed for the Yatri app.</p>
       </div>
     </div>
   </section>
@@ -530,58 +491,7 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
     hero.style.setProperty('--my', (e.clientY - r.top) + 'px');
   });
 
-  /* live train line */
-  var stations = [
-    { code: 'CCG', name: 'Churchgate' }, { code: 'DR', name: 'Dadar' }, { code: 'BA', name: 'Bandra' },
-    { code: 'ADH', name: 'Andheri' }, { code: 'BVI', name: 'Borivali' }, { code: 'VR', name: 'Virar' }
-  ];
-  var last = stations.length - 1;
-  var track = document.getElementById('track');
-  var trainEl = document.getElementById('train');
-  var fillEl = document.getElementById('fill');
-  var statusEl = document.getElementById('status');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var pos = 1.6, target = 3, raf = 0, btns = [];
-
-  stations.forEach(function (s, i) {
-    var b = document.createElement('button');
-    b.type = 'button'; b.className = 'stn'; b.style.left = (i / last * 100) + '%';
-    b.setAttribute('aria-pressed', 'false');
-    b.setAttribute('aria-label', 'Send the train to ' + s.name);
-    b.innerHTML = '<i></i><b>' + s.code + '</b><small>' + s.name + '</small>';
-    b.addEventListener('click', function () { go(i); });
-    track.appendChild(b); btns.push(b);
-  });
-
-  function render() {
-    var pct = pos / last * 100;
-    trainEl.style.left = pct + '%';
-    fillEl.style.width = pct + '%';
-    btns.forEach(function (b, i) { b.setAttribute('aria-pressed', i === target ? 'true' : 'false'); });
-    var d = Math.abs(target - pos);
-    if (d < 0.02) {
-      statusEl.textContent = 'Arrived at ' + stations[target].name;
-    } else {
-      var next = pos < target ? Math.ceil(pos + 0.0001) : Math.floor(pos - 0.0001);
-      statusEl.textContent = 'Next ' + stations[next].name + ' · arriving in ' + Math.max(1, Math.round(d * 11)) + ' min';
-    }
-  }
-  function go(i) {
-    var tryChip = document.getElementById('try'); if (tryChip) tryChip.hidden = true;
-    target = i;
-    cancelAnimationFrame(raf);
-    if (reduce) { pos = i; render(); return; }
-    var from = pos, dist = Math.abs(i - from), dur = Math.min(1900, 450 + dist * 380), t0 = null;
-    if (dist < 0.01) { render(); return; }
-    function step(t) {
-      if (t0 === null) t0 = t;
-      var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
-      pos = from + (i - from) * e; render();
-      if (k < 1) raf = requestAnimationFrame(step);
-    }
-    raf = requestAnimationFrame(step);
-  }
-  render();
 
   /* work filter */
   var chips = document.querySelectorAll('.chip');
