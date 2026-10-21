@@ -226,6 +226,10 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
 .hero { padding-block: clamp(40px, 7vw, 88px) clamp(32px, 5vw, 64px); }
 .hero h1 { font-size: clamp(2.6rem, 6.4vw, 5.25rem); max-width: 14ch; transition: font-weight .12s linear; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+@media (min-width: 941px) {
+  .hero { min-height: calc(100svh - 61px); display: flex; align-items: center; padding-block: clamp(32px, 5vh, 64px); }
+  .hero .in { width: 100%; }
+}
 @media (max-width: 940px) { .hero-grid { grid-template-columns: 1fr; } }
 @media (max-width: 760px) { .hero-art { display: none; } }
 .wave { display: inline-block; transform-origin: 70% 75%; animation: wave 2.4s ease-in-out infinite; }
