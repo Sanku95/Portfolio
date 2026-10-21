@@ -256,6 +256,8 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
 .s-toggle[aria-checked="true"] .switch { background: var(--accent); }
 .s-toggle[aria-checked="true"] .knob { transform: translateX(18px); background: var(--accent-ink); }
 .s-card { width: min(228px, 66%); }
+.reading-book-title { display: flex; align-items: center; gap: 8px; }
+.reading-book-icon { font-size: 1.25rem; line-height: 1; }
 .reading-author { color: var(--muted); font-size: 0.88rem; margin-top: -4px; }
 .reading-note { color: var(--muted); font-size: 0.78rem; line-height: 1.45; margin-top: 10px; max-width: 28ch; }
 .s-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 4px 0 8px; letter-spacing: -0.01em; }
@@ -322,8 +324,8 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
             <div class="sticker s-card" data-act="reading" role="button" tabindex="0" aria-label="Currently reading Storyworthy by Matthew Dicks. Book link to be added." data-x="0.08" data-y="0.31" style="--d:-3.2s">
               <div class="bob">
                 <p class="label">Currently reading</p>
-                <p class="s-title">Storyworthy</p>
-                <p class="reading-author">Daniel Goleman</p>
+                <div class="reading-book-title"><span class="reading-book-icon" aria-hidden="true">📖</span><p class="s-title">Storyworthy</p></div>
+                <p class="reading-author">Matthew Dicks</p>
                 <p class="reading-note"></p>
               </div>
             </div>
