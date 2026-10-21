@@ -275,7 +275,7 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
 .ghost { position: absolute; left: 0; top: 0; z-index: 5; pointer-events: none; display: none; align-items: flex-start; gap: 2px; opacity: 0; transition: opacity .2s; will-change: transform; }
 .ghost span { margin-top: 14px; background: var(--accent); color: var(--accent-ink); font-size: 0.74rem; font-weight: 600; padding: 3px 9px; border-radius: 6px 12px 12px 12px; }
 .ghost.on { opacity: 1; }
-@media (hover: hover) and (pointer: fine) { .ghost { display: flex; } }
+@media (hover: hover) and (pointer: fine) { .ghost { display: flex; } .hero.custom-cursor-active { cursor: none; } }
 </style>
 </head>
 <body>
@@ -757,10 +757,10 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
     hero.addEventListener('pointermove', function (e) {
       var r = hero.getBoundingClientRect();
       tx = e.clientX - r.left + 14; ty = e.clientY - r.top + 16;
-      if (!ghost.classList.contains('on')) { gx = tx; gy = ty; ghost.classList.add('on'); }
+      if (!ghost.classList.contains('on')) { gx = tx; gy = ty; ghost.classList.add('on'); hero.classList.add('custom-cursor-active'); }
       if (!running) { running = true; requestAnimationFrame(loop); }
     });
-    hero.addEventListener('pointerleave', function () { ghost.classList.remove('on'); });
+    hero.addEventListener('pointerleave', function () { ghost.classList.remove('on'); hero.classList.remove('custom-cursor-active'); });
   }
 
   /* active section, scroll progress, back to top */
