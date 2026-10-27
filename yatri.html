@@ -87,8 +87,17 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
 .big-cap { margin-top: 10px; color: var(--muted); max-width: 30ch; }
 
 /* images */
-.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-top: 28px; align-items: start; }
-.shots.wide { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.shots { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 14px; margin-top: 28px; }
+.shots .shot { flex: 0 0 calc(50% - 7px); min-width: 0; }
+.shots .shot.land { flex-basis: 100%; }
+.shots .shot.port { flex-basis: calc((100% - (var(--n, 3) - 1) * 14px) / var(--n, 3)); }
+@media (max-width: 640px) {
+  .shots .shot.port { flex-basis: calc((100% - (var(--m, 2) - 1) * 14px) / var(--m, 2)); }
+  .shots .shot { flex-basis: 100%; }
+}
+.role { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 56px); align-items: center; margin-top: clamp(36px, 6vw, 64px); }
+@media (max-width: 760px) { .role { grid-template-columns: 1fr; } }
+.role .shots { margin-top: 0; }
 .shot { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
 .shot[hidden] { display: none; }
 .shot button { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
@@ -170,9 +179,6 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
   .map-row { grid-template-columns: 1fr; gap: 4px; padding: 16px; }
   .map-row .arr { text-align: left; transform: rotate(90deg); width: 20px; }
 }
-.shots.rail { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; padding-bottom: 12px; align-items: flex-start; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
-.rail .shot { flex: 0 0 clamp(190px, 24vw, 250px); scroll-snap-align: start; }
-.rail-hint { margin-top: 24px; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 .shot:not(.ok) { min-height: 140px; background-image: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--fg) 7%, transparent) 50%, transparent 70%); background-size: 200% 100%; animation: shimmer 1.6s linear infinite; }
 @keyframes shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
 .lb .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: var(--surface); }
@@ -221,6 +227,13 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
         <div class="stat"><b>150x</b><span>user engagement, as reported</span></div>
       </div>
       <div class="hero-shot"><figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/1HY1g18DAeFfBEB2PaWtP1GTpmg.png" alt="Yatri app screens" loading="eager" onerror="this.closest('figure').hidden=true"></button></figure></div>
+      <div class="role">
+        <div>
+          <p class="label">My role</p>
+          <p class="copy" style="margin-top:10px">I aimed to build a seamless experience that turns commuting into a simple, enjoyable journey for everyone. On this project I worked as UX researcher, UX designer, UI designer, motion designer and graphic designer.</p>
+        </div>
+        <div class="shots"><figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/9zAHK6aAQUdiCaGPLR6qAlSn0OM.png?scale-down-to=512" alt="Roles I covered on the Yatri project" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure></div>
+      </div>
     </div>
   </section>
 
@@ -238,7 +251,6 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
           <p class="big-cap">daily commuters on the Mumbai local train network</p>
         </div>
       </div>
-      <div class="shots"><figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/9zAHK6aAQUdiCaGPLR6qAlSn0OM.png?scale-down-to=512" alt="Roles I covered on the Yatri project" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure></div>
     </div>
   </section>
 
@@ -321,7 +333,7 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
       <h2>From storyboard to wireframes</h2>
       <p class="copy">A storyboard put a hypothetical commute on paper and helped decide which actions the app had to support. From there I moved through low-fidelity wireframes, high-fidelity wireframes and a clickable prototype.</p>
       <div class="chips"><span class="pill">Storyboard</span><span class="pill">Lo-fi wireframes</span><span class="pill">Hi-fi wireframes</span><span class="pill">Prototype</span></div>
-      <div class="shots wide">
+      <div class="shots">
         <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/NHvZ9YUQKUnh8Re4CBBm8e2kjUc.jpeg" alt="Yatri storyboard" loading="lazy" onerror="this.closest('figure').hidden=true"></button><figcaption>Storyboard</figcaption></figure>
         <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/WeqNqVO4UPzfzu0N54ixQWC2Cc.jpeg" alt="Yatri storyboard" loading="lazy" onerror="this.closest('figure').hidden=true"></button><figcaption>Storyboard</figcaption></figure>
         <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/RT2tdK6OTkYiy2esUe8JJz73Ac.jpeg" alt="Yatri storyboard" loading="lazy" onerror="this.closest('figure').hidden=true"></button><figcaption>Storyboard</figcaption></figure>
@@ -335,6 +347,15 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
       <p class="label">The solution</p>
       <h2>A simple journey: pick a start, pick a destination, see trains</h2>
       <p class="copy">Select your starting station, choose your destination, and instantly get a list of trains with their real-time locations. Four parts of the app carry the experience.</p>
+
+      <h3 style="margin-top:clamp(28px,4vw,44px);font-size:clamp(1.4rem,3vw,2rem)">Introducing Yatri</h3>
+      <p class="copy">Yatri is your one-stop solution for navigating Mumbai's bustling local train network with ease. Whether you ride every day or only now and then, it gives you a smooth, dependable experience.</p>
+      <div class="shots">
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/SBIeSAgatxUE4z3FHVuwjnhUA.png" alt="Yatri app screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/PSSGfsrblaMYtuaxWFp9oTVYR8.png" alt="Yatri app screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/eFUPKIYqBFHVwXyQZNumKYg1p8.png" alt="Yatri app screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/PrQAlPVl1BPBisOmRrrKJq3SY.png" alt="Yatri app screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+        </div>
 
       <div class="map" role="list" aria-label="How research findings shaped the design">
         <div class="map-head label"><span>What I found</span><span class="arr">&rarr;</span><span>What I designed</span></div>
@@ -363,12 +384,11 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
           <li><b>Train alerts.</b> Notifications on delays or schedule updates for saved trains.</li>
           <li><b>Related to locals.</b> Direct links to ticket fares, the Mumbai rail map, station amenities and railway penalties.</li>
         </ul>
-        <p class="rail-hint">Swipe or scroll to see the screens &rarr;</p>
-        <div class="shots rail">
-          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/SBIeSAgatxUE4z3FHVuwjnhUA.png" alt="Yatri home screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
-          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/PSSGfsrblaMYtuaxWFp9oTVYR8.png" alt="Yatri screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
-          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/eFUPKIYqBFHVwXyQZNumKYg1p8.png" alt="Yatri screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
-          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/PrQAlPVl1BPBisOmRrrKJq3SY.png" alt="Yatri screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
+        <div class="shots">
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/axyWNU3eAxHaEZ2CdOqkjDZo.png" alt="Yatri home screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/PrQAlPVl1BPBisOmRrrKJq3SY.png" alt="Yatri home screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/eFUPKIYqBFHVwXyQZNumKYg1p8.png" alt="Yatri home screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/jGDnMPE4zC6ZYbcIkTcLt8e4Y4.png" alt="Yatri home screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
         </div>
         <div class="step-nav"><button class="btn solid" type="button" data-next="live">Next: Live location &rarr;</button></div>
       </div>
@@ -383,22 +403,16 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
           <li><b>Interactive features.</b> A refresh button for real-time updates and a share option for coordinating with others.</li>
           <li><b>Minimal and clear.</b> Little text, with platform numbers and timings prominent so nobody boards the wrong train.</li>
         </ul>
-        <p class="rail-hint">Swipe or scroll to see the screens &rarr;</p>
-        <div class="shots rail">
-          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/axyWNU3eAxHaEZ2CdOqkjDZo.png" alt="Yatri live location screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
-          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/jGDnMPE4zC6ZYbcIkTcLt8e4Y4.png" alt="Yatri live location screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
-        </div>
         <div class="step-nav"><button class="btn solid" type="button" data-next="news">Next: News &rarr;</button></div>
       </div>
 
       <div class="panel" role="tabpanel" id="p-news" aria-labelledby="t-news" hidden>
         <h3>News and announcements: building trust through real-time updates</h3>
         <p class="copy">The News and Announcements section keeps people informed with real-time updates such as delays, platform changes and alternate routes. A clean, visible announcement bar gives quick access to critical information, and personalized updates build trust. By reducing stress and offering actions people can take, it makes travel feel reliable.</p>
-        <p class="rail-hint">Swipe or scroll to see the screens &rarr;</p>
-        <div class="shots rail">
-          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/DhH7JxQUfQxasGUoABvCTJwkus.png" alt="Yatri news and announcements screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
-          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/72t4ZGH8DFbYyfBzMiKhopW2Who.png" alt="Yatri screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
-          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/ZKcvbAU10W0wDe3nMQwWJsUNVU.png" alt="Yatri screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
+        <div class="shots">
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/DhH7JxQUfQxasGUoABvCTJwkus.png" alt="Yatri news and announcements screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/72t4ZGH8DFbYyfBzMiKhopW2Who.png" alt="Yatri news screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/ZKcvbAU10W0wDe3nMQwWJsUNVU.png" alt="Yatri news screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
         </div>
         <div class="step-nav"><button class="btn solid" type="button" data-next="explore">Next: Explore &rarr;</button></div>
       </div>
@@ -406,11 +420,11 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
       <div class="panel" role="tabpanel" id="p-explore" aria-labelledby="t-explore" hidden>
         <h3>Explore: designing joyful journeys</h3>
         <p class="copy">The Explore section combines function with emotion. Features like Famous Places and Mumbai Foods match what people are curious about, and vibrant visuals with simple navigation invite them to look around. It turns the app from a travel tool into something people enjoy opening.</p>
-        <p class="rail-hint">Swipe or scroll to see the screens &rarr;</p>
-        <div class="shots rail">
-          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/Zh8NXlCsyDO9B4Ixiw3KUaLOLEk.png" alt="Yatri explore screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
-          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/k7npA65M3eq4vlsOQhe7gzZOO1E.png" alt="Yatri explore screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
-          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/UUIWDbZjQtGKgzBXHPjvN1e34.png" alt="Yatri explore screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
+        <div class="shots">
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/SBIeSAgatxUE4z3FHVuwjnhUA.png" alt="Yatri explore screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/Zh8NXlCsyDO9B4Ixiw3KUaLOLEk.png" alt="Yatri explore screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/k7npA65M3eq4vlsOQhe7gzZOO1E.png" alt="Yatri explore screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/UUIWDbZjQtGKgzBXHPjvN1e34.png" alt="Yatri explore screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
         </div>
         <div class="step-nav"><a class="btn solid" href="#impact">See the impact &darr;</a></div>
       </div>
@@ -431,16 +445,30 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
         </div>
       </div>
       <div class="shots">
-        <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/Ghx7Jjg7cyyxGQJ0gMxL2vRlHi0.png" alt="Yatri referral and engagement screens" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
+        <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/Ghx7Jjg7cyyxGQJ0gMxL2vRlHi0.png" alt="Yatri referral and engagement screens" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+        <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/fsJH7v0Ou4WTy8KHwMMI5XdP0U.png" alt="Yatri engagement screen" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
       </div>
 
       <h2 style="margin-top:clamp(40px,6vw,72px)">Live train locations, launched</h2>
       <p class="copy">At the Yatri event at Mumbai Division CSMT, live train locations for <b>Western Railway</b> were unveiled. With precise GPS, commuters can view and share a train's live location straight from the schedule list.</p>
-      <div class="shots wide">
+      <div class="shots">
         <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/7j1J7PttvpmPdOaPhLd8dZZWjZ4.jpeg" alt="Yatri event at Mumbai Division CSMT" loading="lazy" onerror="this.closest('figure').hidden=true"></button><figcaption>Yatri event, Mumbai Division CSMT</figcaption></figure>
         <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/8pygnVFix36VEZXPJNzQ5xCtWsw.jpeg" alt="Yatri event at Mumbai Division CSMT" loading="lazy" onerror="this.closest('figure').hidden=true"></button><figcaption>Yatri event, Mumbai Division CSMT</figcaption></figure>
         <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/Y2tRqJijZufqyMziCW1xV1bcwKU.jpeg" alt="Yatri event at Mumbai Division CSMT" loading="lazy" onerror="this.closest('figure').hidden=true"></button><figcaption>Yatri event, Mumbai Division CSMT</figcaption></figure>
       </div>
+    </div>
+  </section>
+
+  <section class="block" id="graphics">
+    <div class="in">
+      <p class="label">Extras</p>
+      <h2>Graphic work and GIFs</h2>
+      <p class="copy">Beyond the screens, I made graphics and short animated GIFs for Yatri.</p>
+      <div class="shots">
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/WrkqQG9GJvRM5tvK0Zc7vv1V91c.png" alt="Graphic work for Yatri" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/jlOkYoMj3DnxdLAg6Fbfjkh6w.jpg?scale-down-to=1024" alt="Graphic work for Yatri" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+          <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/1hymIfFhIk7iwqK6EC2O20uzGY.png?scale-down-to=512" alt="Graphic or GIF work for Yatri" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true"></button></figure>
+        </div>
     </div>
   </section>
 
@@ -527,11 +555,24 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
     });
   });
 
-  /* image loading state */
+  /* image loading state and shape-aware layout */
+  function arrange(box) {
+    var ports = box.querySelectorAll('.shot.port:not([hidden])').length;
+    var n = ports <= 4 ? ports : (ports % 4 === 0 || ports > 6 ? 4 : 3);
+    box.style.setProperty('--n', Math.max(1, n));
+    box.style.setProperty('--m', Math.max(1, Math.min(2, ports)));
+  }
   Array.prototype.forEach.call(document.querySelectorAll('.shot img'), function (img) {
     var f = img.closest('.shot');
-    function ok() { f.classList.add('ok'); }
-    if (img.complete && img.naturalWidth) ok(); else img.addEventListener('load', ok);
+    function done() {
+      f.classList.add('ok');
+      var r = img.naturalWidth / (img.naturalHeight || 1);
+      f.classList.remove('land', 'port');
+      if (r > 1.25) f.classList.add('land'); else if (r < 0.85) f.classList.add('port');
+      var box = f.closest('.shots'); if (box) arrange(box);
+    }
+    if (img.complete && img.naturalWidth) done(); else img.addEventListener('load', done);
+    img.addEventListener('error', function () { var box = f.closest('.shots'); if (box) setTimeout(function () { arrange(box); }, 0); });
   });
 
   /* image viewer with previous and next */
