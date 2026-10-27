@@ -372,14 +372,14 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
           <button class="chip" type="button" data-f="dash" aria-pressed="false">Dashboards</button>
         </div>
       </div>
-      <p class="hint-line">Pick a project to open it. Yatri opens its case study further down this page. The others open in a new tab.</p>
+      <p class="hint-line">Pick a project to open its page. Projects on Medium and Framer open in a new tab.</p>
       <ul class="rows" id="rows">
         <li data-c="app">
-          <button class="row" type="button" id="open-yatri">
+          <a class="row" href="yatri.html">
             <div><h3>Yatri</h3><p class="sub">Official Indian Railway app, UI/UX design</p></div>
-            <div class="tags"><span class="tag hot">Case study below</span><span class="tag">Transport</span></div>
-            <span class="go"><span>Case study</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span>
-          </button>
+            <div class="tags"><span class="tag hot">Case study</span><span class="tag">Transport</span></div>
+            <span class="go"><span>Read case study</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+          </a>
         </li>
         <li data-c="app">
           <a class="row" href="https://sankalppatil.framer.website/bugsmash" target="_blank" rel="noopener">
@@ -526,7 +526,7 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
 
         <div class="case-foot">
           <span>Illustrations, GIFs and motion for Yatri are on the full page.</span>
-          <a class="btn" href="https://sankalppatil.framer.website/yatri" target="_blank" rel="noopener">Read the full case study</a>
+          <a class="btn solid" href="yatri.html">Read the full case study</a>
         </div>
       </div>
     </div>
@@ -670,11 +670,6 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
       if (n) { e.preventDefault(); select(n, true); }
     });
   });
-  document.getElementById('open-yatri').addEventListener('click', function () {
-    select(tabs[0], false);
-    document.getElementById('case').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
-  });
-
   /* copy email */
   var copyBtn = document.getElementById('copy');
   var emailEl = document.getElementById('email');
@@ -724,7 +719,7 @@ a.row:hover .go, button.row:hover .go { color: var(--accent); }
     var a = s.getAttribute('data-act');
     if (a === 'connect') document.getElementById('contact').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
     else if (a === 'theme') toggleTheme();
-    else if (a === 'case') { select(tabs[0], false); document.getElementById('case').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
+    else if (a === 'case') { window.location.href = 'yatri.html'; }
     else if (a === 'reading' && readingAffiliateUrl) window.open(readingAffiliateUrl, '_blank', 'noopener');
   }
   stickers.forEach(function (s) {
