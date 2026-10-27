@@ -146,6 +146,40 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
 .end .in { display: flex; flex-wrap: wrap; gap: 16px 24px; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.9rem; }
 .to-top { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 40; opacity: 0; pointer-events: none; transform: translateY(8px); transition: opacity .25s, transform .25s; background: var(--surface); }
 .to-top.show { opacity: 1; pointer-events: auto; transform: none; }
+
+/* improvements */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 28px; }
+.stat { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); padding: 16px 18px; }
+.stat b { display: block; font-family: var(--font-display); font-size: clamp(1.9rem, 4.4vw, 2.7rem); font-weight: 650; line-height: 1; letter-spacing: -0.03em; color: var(--accent); font-variant-numeric: tabular-nums; }
+.stat span { display: block; margin-top: 8px; font-size: 0.86rem; color: var(--muted); line-height: 1.4; }
+.pains { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 28px; }
+.pain { border: 1px solid var(--line); border-radius: 16px; padding: 18px; background: var(--surface); }
+.pain h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.pain p { color: var(--muted); font-size: 0.9rem; }
+.map { margin-top: 28px; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--surface); }
+.map-head, .map-row { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); gap: 14px; align-items: center; padding: 14px 20px; }
+.map-head { padding-block: 12px; border-bottom: 1px solid var(--line); }
+.map-row + .map-row { border-top: 1px solid var(--line); }
+.map-row .from { color: var(--muted); font-size: 0.95rem; }
+.map-row .from b { color: var(--fg); font-weight: 500; }
+.map-row .to { font-weight: 500; }
+.map-row .arr { color: var(--accent); text-align: center; font-family: var(--font-mono); }
+.map-head .arr { visibility: hidden; }
+@media (max-width: 640px) {
+  .map-head { display: none; }
+  .map-row { grid-template-columns: 1fr; gap: 4px; padding: 16px; }
+  .map-row .arr { text-align: left; transform: rotate(90deg); width: 20px; }
+}
+.shots.rail { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; padding-bottom: 12px; align-items: flex-start; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+.rail .shot { flex: 0 0 clamp(190px, 24vw, 250px); scroll-snap-align: start; }
+.rail-hint { margin-top: 24px; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.shot:not(.ok) { min-height: 140px; background-image: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--fg) 7%, transparent) 50%, transparent 70%); background-size: 200% 100%; animation: shimmer 1.6s linear infinite; }
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+.lb .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: var(--surface); }
+.lb .prev { left: max(12px, env(safe-area-inset-left, 0px)); }
+.lb .next { right: max(12px, env(safe-area-inset-right, 0px)); }
+.lb .count { position: absolute; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+.lb[data-single="true"] .nav-btn, .lb[data-single="true"] .count { display: none; }
 </style>
 </head>
 <body>
@@ -179,6 +213,12 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
         <div><span class="label">My role</span><span>UX researcher, UX designer, UI designer, motion and graphic designer</span></div>
         <div><span class="label">Research</span><span>Interviews, station shadowing, survey</span></div>
         <div><span class="label">Highlight</span><span>Live train locations, launched for Western Railway</span></div>
+      </div>
+      <div class="stats" aria-label="Yatri in numbers">
+        <div class="stat"><b>7.5M</b><span>daily commuters on Mumbai local trains</span></div>
+        <div class="stat"><b>500+</b><span>app users surveyed</span></div>
+        <div class="stat"><b>15</b><span>daily commuters interviewed</span></div>
+        <div class="stat"><b>150x</b><span>user engagement, as reported</span></div>
       </div>
       <div class="hero-shot"><figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/1HY1g18DAeFfBEB2PaWtP1GTpmg.png" alt="Yatri app screens" loading="eager" onerror="this.closest('figure').hidden=true"></button></figure></div>
     </div>
@@ -257,6 +297,13 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
       <p class="label">Insights</p>
       <h2>Personas and pain points</h2>
       <p class="copy">The persona profile keeps the team focused on user needs and challenges, so the product ends up both useful and enjoyable. Pain points came straight from what people said and what I saw at the stations.</p>
+      <div class="pains">
+        <article class="pain"><h3>Hard to navigate</h3><p>People check schedules several times a day but struggle with the interface.</p></article>
+        <article class="pain"><h3>No onboarding</h3><p>Tourists and first-time users found the app confusing.</p></article>
+        <article class="pain"><h3>Location not trusted</h3><p>At the station, people doubted the train location shown in the app.</p></article>
+        <article class="pain"><h3>Late alerts</h3><p>Platform change notifications often arrived late, causing confusion.</p></article>
+        <article class="pain"><h3>Delays send people away</h3><p>When a train was delayed or cancelled, riders switched to Google Maps.</p></article>
+      </div>
       <div class="shots">
         <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/sQ0dwZM1kRjrzaxg1kkYwGqgyM.png" alt="Yatri user persona and pain points" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
         <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/eLDuOWieJQXvZE38kZW03547Go.png" alt="Yatri pain point" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
@@ -289,6 +336,16 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
       <h2>A simple journey: pick a start, pick a destination, see trains</h2>
       <p class="copy">Select your starting station, choose your destination, and instantly get a list of trains with their real-time locations. Four parts of the app carry the experience.</p>
 
+      <div class="map" role="list" aria-label="How research findings shaped the design">
+        <div class="map-head label"><span>What I found</span><span class="arr">&rarr;</span><span>What I designed</span></div>
+        <div class="map-row" role="listitem"><span class="from"><b>72%</b> wanted live location updates</span><span class="arr" aria-hidden="true">&rarr;</span><span class="to">Live location with a moving train icon and time to the next station</span></div>
+        <div class="map-row" role="listitem"><span class="from"><b>60%</b> wanted favorite routes</span><span class="arr" aria-hidden="true">&rarr;</span><span class="to">Favorite routes on the home screen</span></div>
+        <div class="map-row" role="listitem"><span class="from"><b>50%</b> wanted announcements about trains and megablocks</span><span class="arr" aria-hidden="true">&rarr;</span><span class="to">A news and announcements bar for delays, platform changes and alternate routes</span></div>
+        <div class="map-row" role="listitem"><span class="from">People were unsure which platform to take</span><span class="arr" aria-hidden="true">&rarr;</span><span class="to">Platform numbers and timings shown prominently</span></div>
+        <div class="map-row" role="listitem"><span class="from">People did not trust the train location</span><span class="arr" aria-hidden="true">&rarr;</span><span class="to">A refresh button and a count of riders who set alerts for the train</span></div>
+        <div class="map-row" role="listitem"><span class="from">Delays and cancellations pushed riders to other apps</span><span class="arr" aria-hidden="true">&rarr;</span><span class="to">Alternate route suggestions and alerts for delays</span></div>
+      </div>
+
       <div class="tablist" role="tablist" aria-label="App sections">
         <button class="tab" role="tab" id="t-home" aria-controls="p-home" aria-selected="true" type="button">Home</button>
         <button class="tab" role="tab" id="t-live" aria-controls="p-live" aria-selected="false" tabindex="-1" type="button">Live location</button>
@@ -306,7 +363,8 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
           <li><b>Train alerts.</b> Notifications on delays or schedule updates for saved trains.</li>
           <li><b>Related to locals.</b> Direct links to ticket fares, the Mumbai rail map, station amenities and railway penalties.</li>
         </ul>
-        <div class="shots">
+        <p class="rail-hint">Swipe or scroll to see the screens &rarr;</p>
+        <div class="shots rail">
           <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/SBIeSAgatxUE4z3FHVuwjnhUA.png" alt="Yatri home screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
           <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/PSSGfsrblaMYtuaxWFp9oTVYR8.png" alt="Yatri screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
           <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/eFUPKIYqBFHVwXyQZNumKYg1p8.png" alt="Yatri screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
@@ -325,7 +383,8 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
           <li><b>Interactive features.</b> A refresh button for real-time updates and a share option for coordinating with others.</li>
           <li><b>Minimal and clear.</b> Little text, with platform numbers and timings prominent so nobody boards the wrong train.</li>
         </ul>
-        <div class="shots">
+        <p class="rail-hint">Swipe or scroll to see the screens &rarr;</p>
+        <div class="shots rail">
           <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/axyWNU3eAxHaEZ2CdOqkjDZo.png" alt="Yatri live location screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
           <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/jGDnMPE4zC6ZYbcIkTcLt8e4Y4.png" alt="Yatri live location screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
         </div>
@@ -335,7 +394,8 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
       <div class="panel" role="tabpanel" id="p-news" aria-labelledby="t-news" hidden>
         <h3>News and announcements: building trust through real-time updates</h3>
         <p class="copy">The News and Announcements section keeps people informed with real-time updates such as delays, platform changes and alternate routes. A clean, visible announcement bar gives quick access to critical information, and personalized updates build trust. By reducing stress and offering actions people can take, it makes travel feel reliable.</p>
-        <div class="shots">
+        <p class="rail-hint">Swipe or scroll to see the screens &rarr;</p>
+        <div class="shots rail">
           <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/DhH7JxQUfQxasGUoABvCTJwkus.png" alt="Yatri news and announcements screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
           <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/72t4ZGH8DFbYyfBzMiKhopW2Who.png" alt="Yatri screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
           <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/ZKcvbAU10W0wDe3nMQwWJsUNVU.png" alt="Yatri screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
@@ -346,7 +406,8 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
       <div class="panel" role="tabpanel" id="p-explore" aria-labelledby="t-explore" hidden>
         <h3>Explore: designing joyful journeys</h3>
         <p class="copy">The Explore section combines function with emotion. Features like Famous Places and Mumbai Foods match what people are curious about, and vibrant visuals with simple navigation invite them to look around. It turns the app from a travel tool into something people enjoy opening.</p>
-        <div class="shots">
+        <p class="rail-hint">Swipe or scroll to see the screens &rarr;</p>
+        <div class="shots rail">
           <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/Zh8NXlCsyDO9B4Ixiw3KUaLOLEk.png" alt="Yatri explore screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
           <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/k7npA65M3eq4vlsOQhe7gzZOO1E.png" alt="Yatri explore screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
           <figure class="shot"><button type="button" data-zoom><img src="https://framerusercontent.com/images/UUIWDbZjQtGKgzBXHPjvN1e34.png" alt="Yatri explore screen" loading="lazy" onerror="this.closest('figure').hidden=true"></button></figure>
@@ -388,9 +449,9 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
       <p class="label">Keep exploring</p>
       <h2>More projects</h2>
       <div class="more">
-        <a href="swasth-mitra.html"><p class="label">Healthcare · Product design</p><h3>Swasth Mitra</h3><p>Healthcare services and support in one mobile experience.</p></a>
+        <a href="bugsmash.html"><p class="label">SaaS · Case study</p><h3>Bugsmash</h3><p>A feedback platform for images, PDFs, videos, websites and audio.</p></a>
         <a href="expense-tracker.html"><p class="label">Fintech · Mobile app</p><h3>Expense Tracker</h3><p>An offline-first personal finance app.</p></a>
-        <a href="okus-tea.html"><p class="label">Brand identity · Packaging</p><h3>OKUS Tea</h3><p>Tea brand identity and packaging design.</p></a>
+        <a href="swasth-mitra.html"><p class="label">Healthcare · Product design</p><h3>Swasth Mitra</h3><p>Healthcare services and support in one mobile experience.</p></a>
       </div>
       <div class="step-nav" style="margin-top:36px">
         <a class="btn solid" href="index.html#contact">Let's connect</a>
@@ -406,7 +467,10 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Enlarged image">
   <button class="btn icon-btn x" id="lb-x" type="button" aria-label="Close image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <button class="btn icon-btn nav-btn prev" id="lb-prev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
   <img id="lb-img" alt="">
+  <button class="btn icon-btn nav-btn next" id="lb-next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+  <span class="count" id="lb-count" aria-live="polite"></span>
 </div>
 
 <script>
@@ -463,18 +527,44 @@ section[id] { scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px)); }
     });
   });
 
-  /* image viewer */
-  var lb = document.getElementById('lb'), lbImg = document.getElementById('lb-img'), lastFocus = null;
+  /* image loading state */
+  Array.prototype.forEach.call(document.querySelectorAll('.shot img'), function (img) {
+    var f = img.closest('.shot');
+    function ok() { f.classList.add('ok'); }
+    if (img.complete && img.naturalWidth) ok(); else img.addEventListener('load', ok);
+  });
+
+  /* image viewer with previous and next */
+  var lb = document.getElementById('lb'), lbImg = document.getElementById('lb-img'), lbCount = document.getElementById('lb-count');
+  var lastFocus = null, gallery = [], at = 0;
+  function show(i) {
+    at = (i + gallery.length) % gallery.length;
+    var im = gallery[at].querySelector('img');
+    lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt;
+    lbCount.textContent = (at + 1) + ' / ' + gallery.length;
+  }
+  function openLb(btn) {
+    gallery = Array.prototype.filter.call(document.querySelectorAll('[data-zoom]'), function (b) {
+      return !b.closest('figure').hidden && b.offsetParent !== null;
+    });
+    at = Math.max(0, gallery.indexOf(btn));
+    lb.setAttribute('data-single', gallery.length < 2 ? 'true' : 'false');
+    lastFocus = btn; lb.hidden = false; show(at);
+    document.getElementById('lb-x').focus();
+  }
   function closeLb() { lb.hidden = true; lbImg.removeAttribute('src'); if (lastFocus) lastFocus.focus(); }
   Array.prototype.forEach.call(document.querySelectorAll('[data-zoom]'), function (b) {
-    b.addEventListener('click', function () {
-      var img = b.querySelector('img'); if (!img) return;
-      lastFocus = b; lbImg.src = img.currentSrc || img.src; lbImg.alt = img.alt; lb.hidden = false;
-      document.getElementById('lb-x').focus();
-    });
+    b.addEventListener('click', function () { if (b.querySelector('img')) openLb(b); });
   });
+  document.getElementById('lb-prev').addEventListener('click', function () { show(at - 1); });
+  document.getElementById('lb-next').addEventListener('click', function () { show(at + 1); });
   lb.addEventListener('click', function (e) { if (e.target === lb || e.target.closest('#lb-x')) closeLb(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lb.hidden) closeLb(); });
+  document.addEventListener('keydown', function (e) {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') closeLb();
+    else if (e.key === 'ArrowRight' && gallery.length > 1) show(at + 1);
+    else if (e.key === 'ArrowLeft' && gallery.length > 1) show(at - 1);
+  });
 
   /* active section, progress, back to top */
   var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
